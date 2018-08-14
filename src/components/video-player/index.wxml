@@ -1,0 +1,16 @@
+<view class="video">
+  <video
+    id="videoPlayer"
+    class="video-player"
+    objectFit="fill"
+    show-center-play-btn="{{false}}"
+    poster="{{poster}}"
+    src="{{source}}"
+    controls
+  ></video>
+  <cover-view class="video-play" hidden="{{isPlay}}">
+    <cover-view class="video-play__ctrl" catch:tap="onPlay" >
+      <cover-image src="../../image/icon/play-button.png"></cover-image>
+    </cover-view>
+  </cover-view>
+</view>

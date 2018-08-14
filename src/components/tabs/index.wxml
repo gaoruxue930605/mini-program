@@ -1,0 +1,20 @@
+<view class="tab">
+  <swiper class="tab-nav" display-multiple-items="3">
+        <swiper-item
+          wx:for="{{tabPans}}"
+          wx:key="index"
+          data-index="{{index}}"
+          class="tab-nav__item {{currentSelect === item.name ? 'tab-nav__item__active' : ''}}"
+          data-name="{{item.name}}"
+          catch:tap="onSelect"
+        >
+          <view class="label">{{item.label}}</view>
+        </swiper-item>
+        <view class="tab-nav__bar" style="width:{{bar.width}}px; left:{{bar.left}}px"></view>
+    </swiper>
+  <view class="tab-panes">
+    <view class="tab-panes__slider"  animation="{{animationData}}">
+      <slot></slot>
+    </view>
+  </view>
+</view>

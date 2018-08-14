@@ -1,0 +1,11 @@
+<view class="category">
+  <block wx:for="{{dataSource}}" wx:key="inedx">
+    <view class="category-item" style="background-color:{{item.bgColor}}">
+      <image
+        class="category-item__img"
+        mode="aspectFit"
+        src="{{item.img}}"
+      ></image>
+  </view>
+  </block>
+</view>

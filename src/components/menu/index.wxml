@@ -1,0 +1,16 @@
+<view
+  class="menu"
+>
+  <view class="menu-pane">
+    <block wx:for="{{items}}" wx:key="index">
+      <view wx:if="{{!item.targetLink}}" class="menu-pane__item">
+        <image src="{{item.icon}}" class="menu-pane__item__img"/>
+        <text class="menu-pane__item__name">{{item.name}}</text>
+      </view>
+      <navigator wx:else url="{{item.targetLink}}" hover-class="none" class="menu-pane__item">
+        <image src="{{item.icon}}" class="menu-pane__item__img"/>
+        <text class="menu-pane__item__name">{{item.name}}</text>
+      </navigator>
+    </block>
+  </view>
+</view>

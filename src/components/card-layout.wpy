@@ -1,0 +1,40 @@
+<template>
+  <view class="cardLayout">
+    <view class="cardLayout-title">
+      <view class="cardLayout-title__text">
+        <slot name="title-text"></slot>
+      </view>
+      <slot name="title-widget"></slot>
+    </view>
+    <view class="cardLayout-content">
+      <slot name="content"></slot>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class CardLayout extends wepy.component {
+
+}
+</script>
+<style lang="less">
+.cardLayout {
+  display: flex;
+  width: 100%;
+  padding: 36rpx 30rpx 0;
+  box-sizing: border-box;
+  flex-direction: column;
+  border-bottom: 20rpx solid #efefef;
+  &-title {
+    display: flex;
+    flex-direction: column;
+    &__text {
+      font-size: 32rpx;
+      color: #313131;
+    }
+  }
+  &-content {
+    width: 100%;
+  }
+}
+</style>

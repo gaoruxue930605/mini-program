@@ -1,0 +1,6 @@
+
+<view class="pane" style="width:{{width}}px">
+  <view class="pane-slider">
+      <slot></slot>
+  </view>
+</view>

@@ -1,0 +1,249 @@
+<template>
+  <view class="detail">
+    <video-player
+      courseId="145"
+      videoSource="{{videoSrc}}"
+      poster="{{poster}}"
+    />
+    <course-card
+      courseId="145"
+      isCollect="{{false}}"
+      views="{{1024}}"
+      title="如何进行战略瀑布分析"
+      price="{{56}}"
+    ></course-card>
+    <!-- 课程简介 -->
+    <CardLayout>
+      <text slot="title-text">课程简介</text>
+      <view slot="content" class="detail-card__content">
+        企业在制定其发展战略之前，需要对外部经营环境和自身内部条件进行全面分析，以便制定出适合自身发展且能够指导企业运营管理的战略方向和目标。
+        企业在制定其发展战略之前，需要对外部经营环境和自身内部条件进行全面分析
+      </view>
+    </CardLayout>
+    <!-- 课程目录 -->
+    <CardLayout>
+      <text slot="title-text">课程目录</text>
+      <view slot="content" class="detail-course__list">
+        <repeat for="{{contents}}" key="index" index="index" item="item">
+          <!-- repeat start -->
+          <view
+            class="detail-course__list__item {{currentSelect === item.courseId ? 'content-selected' : ''}}"
+            @tap.stop="onSelect({{item}})"
+          >
+            <view>
+              <image
+                class="detail-course__list__img"
+                src="{{currentSelect === item.courseId ? '/image/icon/selected_playlist.png' :'/image/icon/select_playlist.png'}}"
+              />
+              <view class="detail-course__list__text">
+                {{item.courseId}} {{item.name}}
+              </view>
+              <view class="detail-course__list__time">({{item.time}})</view>
+            </view>
+            <view>{{item.isFree ? '免费' : '收费'}}</view>
+          </view>
+          <!-- repeat end -->
+        </repeat>
+      </view>
+    </CardLayout>
+    <!-- 导师介绍 -->
+    <CardLayout>
+      <text slot="title-text">导师介绍</text>
+      <view slot="content" class="detail-course__list">
+        <view class="teacher-info">
+          <image class="teacher-info__pic" src="http://res.unicareer.org/up18-6-155227503.jpg" />
+          <view class="teacher-info__name">LULU老师</view>
+        </view>
+        <!-- 技能部分for渲染 -->
+        <view class="teacher-desc">
+          <view class="teacher-desc__item">8年工作经验</view>
+        </view>
+        <view class="teacher-desc">
+          <view class="teacher-desc__item">主要负责TMT、供应链类项目</view>
+        </view>
+        <!--  -->
+      </view>
+    </CardLayout>
+    <!-- 课后测试 -->
+    <CardLayout>
+      <text slot="title-text">课后测试</text>
+      <view slot="content" class="detail-course__list">
+        <view class="test-operation">
+          <view class="test-operation__desc">学练结合，巩固提高</view>
+          <view class="test-operation__btn">马上测试</view>
+        </view>
+      </view>
+    </CardLayout>
+    <!-- 学员评价 -->
+    <CardLayout>
+      <text slot="title-text">学员评价</text>
+      <view slot="content" class="detail-course__list">
+        <!--  -->
+      </view>
+    </CardLayout>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import CardLayout from '../components/card-layout'
+export default class courseDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '课程详情',
+		usingComponents: {
+      'video-player': '../components/video-player/index',
+      'course-card': '../components/course-card/index'
+		}
+  }
+  data = {
+    currentSelect: '1.1',
+    contents: [{
+      courseId: '1.1',
+      name: '单词介绍试听',
+      isFree: true,
+      time: '22分30秒'
+    }, {
+      courseId: '1.2',
+      name: '单词介绍试听',
+      isFree: false,
+      time: '22分30秒'
+    }, {
+      courseId: '1.3',
+      name: '单词介绍试听',
+      isFree: false,
+      time: '22分30秒'
+    }],
+    courseId: null,
+    videoSrc: 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400',
+    poster: "https://img.videocc.net/uimage/6/674a8b4f5c/2/674a8b4f5cc10318d3941e2e8fe04452_0_b.jpg"
+
+  }
+  components = {
+    CardLayout
+  }
+  methods = {
+    onSelect(item) {
+      this.currentSelect = item.courseId;
+      this.$apply()
+    }
+  }
+  onShareAppMessage(Object) {
+    console.log(Object);
+
+  }
+  onLoad(option) {
+    console.log(option);
+    this.courseId = option && option.courseId
+  }
+}
+</script>
+<style lang="less">
+.mixin-item {
+  display: flex;
+  height: 44rpx;
+  align-items: center;
+}
+// 主要: 课程介绍 课程列表
+.detail {
+  &-card__content {
+    font-size: 26rpx;
+    color: #88898b;
+    padding: 30rpx 0 48rpx;
+    line-height: 36rpx;
+    letter-spacing: 2rpx;
+  }
+  &-course__list {
+    display: flex;
+    padding-top: 22rpx;
+    padding-bottom: 38rpx;
+    flex-direction: column;
+    &__item {
+      display: flex;
+      font-size: 24rpx;
+      color: #313131;
+      justify-content: space-between;
+      > view {
+        .mixin-item
+      }
+    }
+    &__img {
+      width: 20rpx;
+      height: 20rpx;
+      margin-right: 10rpx;
+    }
+    &__text {
+      max-width: 250rpx;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &__time {
+      margin-left: 12rpx;
+      color: #b1b3b4;
+    }
+  }
+}
+// 选择课程
+.content-selected {
+  color: #e9bf2d;
+}
+// 教师部分
+.teacher {
+  &-info {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10rpx;
+    &__pic {
+      width: 78rpx;
+      height: 78rpx;
+      border-radius: 100%;
+      align-items: center;
+    }
+    &__name {
+      font-size: 30rpx;
+      color: #5d5e5f;
+      line-height: 78rpx;
+      margin-left: 20rpx;
+    }
+  }
+  &-desc {
+    .mixin-item;
+    width: 100%;
+    font-size: 26rpx;
+    flex-wrap: wrap;
+    color: #88898b;
+    &::before {
+      content: '';
+      display: block;
+      width: 12rpx;
+      height: 12rpx;
+      border-radius: 100%;
+      margin-right: 16rpx;
+      background-color: #88898b;
+    }
+  }
+}
+// 测试部分
+.test {
+  &-operation {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    &__desc {
+      font-size: 26rpx;
+      color: #5d5e5f;
+    }
+    &__btn {
+      width: 158rpx;
+      height: 56rpx;
+      background-color: #e9bf2d;
+      border-radius: 28rpx;
+      font-size: 28rpx;
+      color: #ffffff;
+      text-align: center;
+      line-height: 56rpx;
+    }
+  }
+}
+</style>

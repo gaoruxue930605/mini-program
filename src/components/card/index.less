@@ -1,0 +1,84 @@
+.mixins {
+  padding-left: 17rpx;
+  padding-right: 17rpx;
+}
+.starts {
+  position: absolute;
+  max-width: 168rpx;
+  height: 28rpx;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  > image {
+    width: 168rpx;
+    height: 28rpx;
+  }
+}
+.card {
+  width: 354rpx;
+  border: 1rpx solid #eee;
+  overflow: hidden;
+  margin: 17rpx 0;
+  font-size: 24rpx;
+  padding-bottom: 10rpx;
+  &-bg {
+    width: 354rpx;
+    height: 212rpx;
+    &__img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &-title {
+    .mixins;
+    padding-top: 25rpx;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    font-size: 26rpx;
+    color: #313131;
+  }
+  &-ping {
+    .mixins;
+    padding-top: 20rpx;
+    color: #e9bf2d;
+    font-size: 28rpx;
+    // display: flex;
+    // height: 48rpx;
+    // align-items: center;
+    &__start {
+      position: relative;
+      width: 168rpx;
+      height: 28rpx;
+      margin: 0 20rpx;
+      &__empty {
+        .starts;
+      }
+      &__full {
+        .starts;
+      }
+    }
+  }
+  &-operation {
+    .mixins;
+    display: flex;
+    padding-top: 18rpx;
+    justify-content: space-between;
+    &__view {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22rpx;
+      color: #939398;
+      &__eye{
+        width: 22rpx;
+        height: 16rpx;
+        margin-right: 5rpx;
+      }
+    }
+    &__collect {
+      width: 25rpx;
+      height: 26rpx;
+    }
+  }
+}

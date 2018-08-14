@@ -1,0 +1,100 @@
+<style lang="less">
+  .counter {
+    text-align: left;
+    font-size: 12px;
+  }
+  .count {
+    font-size: 18px;
+    font-weight: bold;
+    &.red {
+      color: red;
+    }
+    &.green {
+      color: green;
+    }
+  }
+</style>
+<template>
+  <view class="counter {{style}}">
+    <button @tap="plus" size="mini">  +  </button>
+    <button @tap="minus" size="mini">  -  </button>
+    <button @tap="incNum" size="mini">  INCREMENT  </button>
+    <button @tap="decNum" size="mini">  DECREMENT  </button>
+    <button @tap="asyncInc" size="mini">  ASYNC INCREMENT  </button>
+    <text class="count"> {{num}} </text>
+    <text class="count"> {{stateNum}} </text>
+    <text class="count"> {{asyncNum}} </text>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import { INCREMENT, DECREMENT } from '../store/types/counter'
+  import { asyncInc } from '../store/actions'
+
+  @connect({
+    stateNum (state) {
+      return state.counter.num
+    },
+    asyncNum (state) {
+      return state.counter.asyncNum
+    }
+  }, {
+    incNum: INCREMENT,
+    decNum: DECREMENT,
+    asyncInc
+  })
+
+  export default class Counter extends wepy.component {
+    props = {
+      num: {
+        type: [Number, String],
+        coerce: function (v) {
+          // console.log(v);
+
+          return +v
+        },
+        default: 50
+      }
+    }
+
+    data = {
+    }
+    events = {
+      'index-broadcast': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    watch = {
+      num (curVal, oldVal) {
+        console.log(`旧值：${oldVal}，新值：${curVal}`)
+      }
+    }
+    onLoad() {
+      // const innerAudioContext = wx.createInnerAudioContext()
+      // innerAudioContext.autoplay = true
+      // innerAudioContext.src = 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E061FF02C31F716658E5C81F5594D561F2E88B854E81CAAB7806D5E4F103E55D33C16F3FAC506D1AB172DE8600B37E43FAD&fromtag=46'
+      // innerAudioContext.onPlay(() => {
+      //     console.log('开始播放')
+      // })
+      // innerAudioContext.onError((res) => {
+      //     console.log(res.errMsg)
+      //     console.log(res.errCode)
+      // })
+    }
+    methods = {
+      plus () {
+        this.num = this.num + 1
+        console.log(this.$name + ' plus tap')
+
+        this.$emit('index-emit', 1, 2, 3)
+      },
+      minus () {
+        this.num = this.num - 1
+        console.log(this.$name + ' minus tap')
+      }
+    }
+  }
+</script>

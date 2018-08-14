@@ -1,0 +1,107 @@
+<template>
+  <repeat for="{{classList}}" key="index" index="index" item="item">
+    <widget if="!!item.category.list.length" position="center">
+      <text slot="title">{{item.category.name}}</text>
+      <view slot="content" class="category-content">
+        <repeat for="{{item.category.list}}" key="itm.id" index="index" item="itm">
+          <card
+            imgUrl="{{itm.imgUrl}}"
+            title="{{itm.title}}"
+            score="{{itm.score}}"
+            view="{{itm.view}}"
+            isCollect="{{itm.isCollect}}"
+            courseId="{{itm.id}}"
+          />
+        </repeat>
+      </view>
+    </widget>
+  </repeat>
+</template>
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+export default class CourseCategory extends wepy.page {
+  config = {
+		navigationBarTitleText: '课程列表',
+		usingComponents: {
+			widget: '../components/widget/index',
+			card: '../components/card/index',
+		}
+	}
+  data = {
+    // 课程
+		classList: [{
+      category: {
+        name: '精品课程',
+        list: [{
+          id: 12,
+          title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+          imgUrl:
+            'http://cimage.tianjimedia.com/uploadImages/20160526111056154001.jpg',
+          score: 5,
+          view: 2306,
+          isCollect: false
+        },
+        {
+          id: 15,
+          title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+          imgUrl:
+            'http://img0.sc115.com/uploads/sc/jpgs/1506/apic12480_sc115.com.jpg',
+          score: 2,
+          view: 2006,
+          isCollect: false
+        },
+        {
+          id: 18,
+          title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+          imgUrl:
+            'http://sudasuta.com/wp-content/uploads/2015/07/Fashion-Illustrator01.jpg',
+          score: 3.5,
+          view: 100,
+          isCollect: true
+        }]
+      }
+    }, {
+      category: {
+        name: '求职',
+        list: [{
+          id: 12,
+          title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+          imgUrl:
+            'http://cimage.tianjimedia.com/uploadImages/20160526111056154001.jpg',
+          score: 5,
+          view: 2306,
+          isCollect: false
+        },
+        {
+          id: 15,
+          title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+          imgUrl:
+            'http://img0.sc115.com/uploads/sc/jpgs/1506/apic12480_sc115.com.jpg',
+          score: 2,
+          view: 2006,
+          isCollect: false
+        },
+        {
+          id: 18,
+          title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+          imgUrl:
+            'http://sudasuta.com/wp-content/uploads/2015/07/Fashion-Illustrator01.jpg',
+          score: 3.5,
+          view: 100,
+          isCollect: true
+        }]
+      }
+    }],
+  }
+}
+</script>
+<style lang="less">
+.category-content {
+	width: 100%;
+	display: flex;
+	padding: 0 16rpx;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+</style>

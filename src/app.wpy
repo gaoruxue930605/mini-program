@@ -1,0 +1,112 @@
+<style lang="less">
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+import { login } from './api'
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index',
+      'pages/mine',
+      'pages/courseCategory',
+      'pages/courseDetail',
+      'pages/allCourse'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: '#707070',
+      borderStyle: '#333',
+      backgroundColor: '#f8f8f8',
+      selectedColor: '#e9bf2d',
+      list: [{
+        iconPath: 'image/tab/home.png',
+        selectedIconPath: `image/tab/home-on.png`,
+        pagePath: 'pages/index',
+        text: '首页',
+      }, {
+        iconPath: 'image/tab/user.png',
+        selectedIconPath: `image/tab/user-on.png`,
+        pagePath: 'pages/mine',
+        text: '我的',
+      }]
+    }
+  }
+
+  globalData = {
+    userInfo: null
+  }
+
+  constructor () {
+    super()
+    // this.use('requestfix')
+    this.use('promisify')
+    this.intercept('request', {
+          // 发出请求时的回调函数
+          config (config) {
+              return config;
+          },
+          // 请求成功后的回调函数
+          success (res) {
+            // console.log(res);
+
+              if (res.statusCode >= 400 || res.statusCode >= 500) {
+                return Promise.reject(res)
+              }
+              if (res.statusCode === 200) {
+                if (res.data.code === 1) {
+                  return res.data
+                } else if (res.data.code === 9) {
+                  wepy.removeStorageSync('token')
+                  login()
+                } else {
+                  wx.showToast({
+                    title: 'code:' + res.data.code + ', msg:' + res.data.msg,
+                    mask: true,
+                    icon: 'none'
+                  })
+                  //  throw new Error('code:' + res.data.code + ', msg:' + res.data.msg)
+                  //  return res.data
+                }
+              }
+              return res;
+          },
+
+          //请求失败后的回调函数
+          fail (p) {
+              // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+              return Promise.reject('error')
+          },
+          // 请求完成时的回调函数(请求成功或失败都会被执行)
+          complete (p) {
+              // console.log('request complete: ', p);
+          }
+      });
+  }
+
+  async onLaunch() {
+    login()
+  }
+
+}
+</script>

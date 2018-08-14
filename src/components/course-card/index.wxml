@@ -1,0 +1,26 @@
+<view class="sourseCard">
+  <view class="sourseCard-operation">
+    <view class="sourseCard-operation__view">
+      <image class="sourseCard-operation__view__eye" src="/image/icon/views.png" />
+      <text class="sourseCard-operation__view__score">1024</text>
+    </view>
+    <view class="sourseCard-operation__share">
+      <image
+        class="sourseCard-operation__share__collect"
+        src="{{isCollect ? '/image/icon/full_zan.png' : '/image/icon/empty_zan.png'}}"
+        catch:tap="onSelect"
+      />
+      <button open-type="share" class="sourseCard-operation__btn" hover-class="none">
+        <image
+          class="sourseCard-operation__share__btn"
+          src="/image/icon/share.png"
+        />
+      </button>
+    </view>
+  </view>
+  <view class="sourseCard-title">{{title}}</view>
+  <view class="sourseCard-purchase">
+    <view class="sourseCard-purchase__price">价格￥{{price}}</view>
+    <view class="sourseCard-purchase__pay">购买</view>
+  </view>
+</view>

@@ -1,0 +1,43 @@
+<view class="card">
+  <view
+    class="card-bg"
+    catch:tap="toDetail">
+    <image class="card-bg__img" src="{{imgUrl}}"></image>
+  </view>
+  <view class="card-title">
+    {{title}}
+  </view>
+  <view class="card-ping">
+    ¥{{price}}
+    <!-- <view class="card-ping__title">评分</view>
+    <view class="card-ping__start">
+      <view
+        class="card-ping__start__empty"
+      >
+        <image src="../../image/icon/empty_star.png"/>
+      </view>
+
+      <view
+        class="card-ping__start__full"
+        style="width:{{starWidth}}rpx"
+      >
+        <image
+          src="../../image/icon/full_star.png"
+        />
+      </view>
+
+    </view>
+    <view class="card-ping__score">{{score}}</view> -->
+  </view>
+  <view class="card-operation">
+    <view class="card-operation__view">
+      <image class="card-operation__view__eye" src="../../image/icon/views.png" />
+      <text class="card-operation__view__score">{{view}}</text>
+    </view>
+    <image
+      class="card-operation__collect"
+      src="{{isCollect ? '../../image/icon/full_zan.png' : '../../image/icon/empty_zan.png'}}"
+      catch:tap="onSelect"
+    />
+  </view>
+</view>

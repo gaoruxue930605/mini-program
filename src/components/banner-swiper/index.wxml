@@ -1,0 +1,29 @@
+<view class="swiper">
+  <swiper
+    class="swiper-wrapper"
+    indicator-dots="{{indicatorDots}}"
+    indicator-color="{{indicatorColor}}"
+    indicator-active-color="{{indicatorActiveColor}}"
+    circular="{{circular}}"
+    autoplay="{{autoplay}}"
+    interval="{{interval}}"
+    duration="{{duration}}"
+  >
+    <block wx:for="{{items}}" wx:key="index">
+      <swiper-item class="swiper-item">
+        <view wx:if="{{!item.targetLink}}" class="swiper-item__navigator">
+          <image
+            class="swiper-item__img"
+            src="{{item.url}}"
+          />
+        </view>
+        <navigator wx:else url="{{item.targetLink}}" hover-class="none"  class="swiper-item__navigator">
+          <image
+            class="swiper-item__img"
+            src="{{item.url}}"
+          />
+        </navigator>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

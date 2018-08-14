@@ -1,0 +1,134 @@
+<template>
+  <view class="all">
+    <Tabs class="iTabs" catch:onSelect="onSelect">
+      <TabPane label="全部课程" name="1">
+        <scroll-view style="height: {{height}}px" scroll-y>
+          <view class="all-content" >
+            <repeat for="{{allcourse}}" key="item.id" index="index" item="item">
+              <card
+                imgUrl="{{item.imgUrl}}"
+                title="{{item.title}}"
+                price="{{item.price}}"
+                view="{{item.view}}"
+                isCollect="{{item.isCollect}}"
+                courseId="{{item.id}}"
+              />
+            </repeat>
+          </view>
+        </scroll-view>
+
+      </TabPane>
+      <TabPane label="求职技巧" name="2">
+        <scroll-view style="height: {{height}}px" scroll-y>
+          <view class="all-content" >
+            <repeat for="{{job}}" key="item.id" index="index" item="item">
+              <card
+                imgUrl="{{item.imgUrl}}"
+                title="{{item.title}}"
+                price="{{item.price}}"
+                view="{{item.view}}"
+                isCollect="{{item.isCollect}}"
+                courseId="{{item.id}}"
+              />
+            </repeat>
+          </view>
+        </scroll-view>
+      </TabPane>
+      <TabPane label="行业情况" name="3">
+        <scroll-view style="height: {{height}}px" scroll-y>
+          <view class="all-content" >
+            <repeat for="{{industry}}" key="item.id" index="index" item="item">
+              <card
+                imgUrl="{{item.imgUrl}}"
+                title="{{item.title}}"
+                price="{{item.price}}"
+                view="{{item.view}}"
+                isCollect="{{item.isCollect}}"
+                courseId="{{item.id}}"
+              />
+            </repeat>
+          </view>
+        </scroll-view>
+      </TabPane>
+    </Tabs>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import { getAllCourse } from '../store/actions/getAllCourse'
+import counter from '../components/counter'
+@connect({
+  getlist(state) {
+    return state.allCourse.list
+  }
+}, {
+  getAllCourse
+})
+export default class AllCourse extends wepy.page {
+	config = {
+		navigationBarTitleText: '全部课程',
+		usingComponents: {
+			Tabs: '../components/tabs/index',
+			TabPane: '../components/tabs/tabpane/index',
+			card: '../components/card/index'
+		}
+  }
+  components = {
+    counter
+  }
+  data = {
+    allcourse: [],
+    job: [],
+    industry: [],
+    activTab: 1,
+    height: wx.getSystemInfoSync().windowHeight
+  }
+  watch = {
+    getlist(v) {
+      if (!(v && v.length)) return
+      if (this.activTab == 1) {
+        this.allcourse = v
+      } else if (this.activTab == 2) {
+        this.job = v
+      } else if (this.activTab == 3) {
+        this.industry = v
+      }
+      this.$apply()
+    }
+  }
+  methods = {
+    onSelect(e) {
+      this.activTab = e.detail.name;
+      this.methods.getAllCourse({id: e.detail.name})
+    }
+  }
+  getTabHeight() {
+    const query = wx.createSelectorQuery()
+    query.select('.iTabs >>> .tab > .tab-nav').boundingClientRect((res) => {
+      const height = this.height
+      this.height = height - res.height
+      this.$apply()
+    }).exec()
+  }
+  onLoad() {
+    this.methods.getAllCourse({id: 1})
+    this.getTabHeight()
+  }
+}
+</script>
+<style lang="less">
+
+.all {
+  height: 100%;
+  overflow: hidden;
+  &-content {
+    width: 100%;
+    display: flex;
+    padding: 0 11rpx;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+}
+</style>

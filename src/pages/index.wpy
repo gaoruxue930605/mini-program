@@ -1,0 +1,274 @@
+<style lang="less">
+.index-content {
+	width: 100%;
+	display: flex;
+	padding: 0 11rpx;
+	justify-content: space-between;
+  flex-wrap: wrap;
+}
+.index-banner {
+	width: 100%;
+	height: 320rpx;
+	padding: 16rpx 0;
+	text-align: center;
+	&__img {
+		width: 96%;
+		height: 320rpx;
+		border-radius: 10rpx;
+	}
+}
+</style>
+<template>
+  <view class="index">
+    <banner-swiper
+      items="{{swiperItems}}"
+    />
+    <menu-list
+      items="{{menuItems}}"
+    />
+    <!-- 精品推荐 -->
+    <widget
+      if="!!classList.length"
+      showMore="{{true}}"
+      toUrl="courseCategory"
+    >
+      <text slot="title">精品课程</text>
+      <view slot="content" class="index-content">
+        <repeat for="{{classList}}" key="item.id" index="index" item="item">
+          <card
+            imgUrl="{{item.imgUrl}}"
+            title="{{item.title}}"
+            price="{{item.price}}"
+            view="{{item.view}}"
+            isCollect="{{item.isCollect}}"
+            courseId="{{item.id}}"
+          />
+        </repeat>
+      </view>
+    </widget>
+    <!-- banner -->
+    <!-- <view class="index-banner">
+      <image
+        class="index-banner__img"
+        src="http://i1.3conline.com/images/piclib/201202/23/batch/1/127284/1329961990818t2p3svcest.jpg"
+      />
+    </view> -->
+    <!-- 求职技巧 行业概况 -->
+    <repeat for="{{nav}}" key="index" index="index" item="item">
+      <widget>
+        <text slot="title">{{item.nav.text}}</text>
+        <view slot="content" class="index-content">
+          <grid-category dataSource="{{item.series}}"></grid-category>
+        </view>
+    </widget>
+    </repeat>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+
+@connect({
+	num(state) {
+		return state.counter.num
+	},
+	asyncNum(state) {
+		return state.counter.asyncNum
+	},
+	sumNum(state) {
+		return state.counter.num + state.counter.asyncNum
+	}
+})
+export default class Index extends wepy.page {
+	config = {
+		navigationBarTitleText: '首页',
+		usingComponents: {
+			'banner-swiper': '../components/banner-swiper/index',
+			'menu-list': '../components/menu/index',
+			'widget': '../components/widget/index',
+			'card': '../components/card/index',
+			'grid-category': '../components/grid-category/index'
+		}
+	}
+	components = {}
+
+	data = {
+		// 轮播
+		swiperItems: [
+			{
+				url: 'http://seopic.699pic.com/photo/40006/5720.jpg_wh1200.jpg',
+				targetLink: 'courseCategory'
+			},
+			{
+				url: 'http://pic1.win4000.com/wallpaper/1/51f9ccd93fff4.jpg',
+				targetLink: 'courseCategory'
+			},
+			{
+				url: 'http://pic1.16xx8.com/allimg/170801/1-1FP116442T62.jpg',
+				targetLink: 'courseCategory'
+			}
+		],
+		// 轮播菜单
+		menuItems: [
+			{
+				name: '全部课程',
+				icon: '/image/icon/all.png',
+				targetLink: 'allCourse'
+			},
+			{
+				name: '免费培训',
+				icon: '/image/icon/train.png',
+				targetLink: 'log'
+			},
+			{
+				name: '职业评测',
+				icon: '/image/icon/test.png',
+				targetLink: 'log'
+			}
+		],
+		// 精品课程
+		classList: [
+			{
+				id: 12,
+				title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+				imgUrl:
+					'http://cimage.tianjimedia.com/uploadImages/20160526111056154001.jpg',
+				price: 5,
+				view: 2306,
+				isCollect: false
+			},
+			{
+				id: 15,
+				title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+				imgUrl:
+					'http://img0.sc115.com/uploads/sc/jpgs/1506/apic12480_sc115.com.jpg',
+				price: 2,
+				view: 2006,
+				isCollect: false
+			},
+			{
+				id: 18,
+				title: '如何进行战略瀑布分析如何进行战略瀑布分析',
+				imgUrl:
+					'http://sudasuta.com/wp-content/uploads/2015/07/Fashion-Illustrator01.jpg',
+				price: 3.5,
+				view: 100,
+				isCollect: true
+			}
+		],
+		// 求职技巧 行业概况
+		nav: [
+			{
+				nav: {
+					text: '求职技巧',
+					url: '求职技巧',
+					hrefUrl: '/classification/SJgSvksmSl'
+				},
+				series: [
+					{
+						text: '简历与面试',
+						url: '/series/rk3eZoXSg',
+            img: '/image/icon/jianlihemianshi.png',
+            bgColor: '#4c9bf7',
+						notPublished: false,
+						publishDate: '12.30'
+					},
+					{
+						text: '职业技能',
+						url: '/series/rylL0Od4b',
+            img: '/image/icon/zhiyejineng.png',
+            bgColor: '#ffbe40',
+						notPublished: false,
+						publishDate: ''
+					},
+					{
+						text: '职业规划',
+						url: '/series/HyS03EzzX',
+            img: '/image/icon/zhiyeguihua.png',
+            bgColor: '#82ddd8',
+						notPublished: false,
+						publishDate: ''
+					}
+				]
+			},
+			{
+				nav: {
+					text: '行业概况',
+					url: '行业概况',
+					hrefUrl: '/classification/H12_FYtWg'
+				},
+				series: [
+					{
+						text: '咨询',
+						url: '/series/B16uttK-g',
+            img: '/image/icon/zixun.png',
+            bgColor: '#4c9bf7',
+						notPublished: false,
+						publishDate: ''
+					},
+					{
+						text: '金融',
+						url: '/series/BJl3uKKt-g',
+            img: '/image/icon/jinrong.png',
+            bgColor: '#ffbe40',
+						notPublished: false,
+						publishDate: ''
+					},
+					{
+						text: '快消',
+						url: '/series/B1tCDtMFe',
+            img: '/image/icon/kuaixiao.png',
+            bgColor: '#82ddd8',
+						notPublished: false,
+						publishDate: ''
+					},
+					{
+						text: '会计',
+						url: '/series/S1gTOKYKbg',
+            img: '/image/icon/kuaiji.png',
+            bgColor: '#737df7',
+						notPublished: false,
+						publishDate: ''
+					},
+					{
+						text: '房地产',
+						url: '/series/rkEyIF6l-',
+            img: '/image/icon/fangdichan.png',
+            bgColor: '#ffadbf',
+						notPublished: false,
+						publishDate: ''
+					},
+					{
+						text: '数据',
+						url: '/series/SJs6cepsZ',
+            img: '/image/icon/shuju.png',
+            bgColor: '#fbd854',
+						notPublished: false,
+						publishDate: ''
+					}
+				]
+			}
+		]
+	}
+
+	computed = {
+		now() {
+			return +new Date()
+		}
+	}
+
+	methods = {}
+
+	events = {}
+
+	onLoad() {
+		// const backgroundAudioManager = wx.getBackgroundAudioManager()
+		// backgroundAudioManager.title = '此时此刻'
+		// backgroundAudioManager.epname = '此时此刻'
+		// backgroundAudioManager.singer = '许巍'
+		// backgroundAudioManager.coverImgUrl = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000'
+		// backgroundAudioManager.src = 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E061FF02C31F716658E5C81F5594D561F2E88B854E81CAAB7806D5E4F103E55D33C16F3FAC506D1AB172DE8600B37E43FAD&fromtag=46' // 设置了 src 之后会自动播放
+	}
+}
+</script>
